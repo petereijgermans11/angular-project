@@ -7,6 +7,7 @@ angular speeltuin
 - 'Gulp' versus 'Grunt': https://medium.com/@preslavrachev/gulp-vs-grunt-why-one-why-the-other-f5d3b398edc4
 - Plunker
 - Angular PluralSight Training: http://www.pluralsight.com/courses/angularjs-fundamentals
+- Yeoman: http://yeoman.io/
 
  
 Ui: https://angular-ui.github.io/
