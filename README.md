@@ -8,6 +8,7 @@ angular speeltuin
 - Plunker
 - Angular PluralSight Training: http://www.pluralsight.com/courses/angularjs-fundamentals
 - Yeoman: http://yeoman.io/
+- Making Maven Grunt: http://addyosmani.com/blog/making-maven-grunt/
 
  
 Ui: https://angular-ui.github.io/
