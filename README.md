@@ -5,8 +5,12 @@ angular speeltuin
 - John Papa - angular guide: https://github.com/johnpapa/angular-styleguide
 - Angular material design: https://material.angularjs.org/#/
 - 'Gulp' versus 'Grunt': https://medium.com/@preslavrachev/gulp-vs-grunt-why-one-why-the-other-f5d3b398edc4
+- Gulp: http://andy-carter.com/blog/a-beginners-guide-to-the-task-runner-gulp
 - Plunker
 - Angular PluralSight Training: http://www.pluralsight.com/courses/angularjs-fundamentals
+- Yeoman: http://yeoman.io/
+- Making Maven Grunt: http://addyosmani.com/blog/making-maven-grunt/
+- Template project for a web app using Java, Maven, JavaScript, Jasmine, and Grunt: https://github.com/ahabra/webappTemplate
 
  
 Ui: https://angular-ui.github.io/
