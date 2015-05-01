@@ -12,6 +12,7 @@ angular speeltuin
 - Making Maven Grunt: http://addyosmani.com/blog/making-maven-grunt/
 - Template project for a web app using Java, Maven, JavaScript, Jasmine, and Grunt: https://github.com/ahabra/webappTemplate
 - http://docs.vagrantup.com/v2/getting-started/provisioning.html
+- https://github.com/coffeeaddict/angular-vertx
 
  
 Ui: https://angular-ui.github.io/
