@@ -1,0 +1,54 @@
+
+Vagrant.configure(2) do |config|
+
+  #config.vm.box = "ubuntu/trusty64"
+  #start ubuntu desktop
+  config.vm.box = "boxcutter/ubuntu1404-desktop"
+ 
+
+  config.vm.provider "virtualbox" do |vb|
+    # Display the VirtualBox GUI when booting the machine
+     vb.gui = true
+  end
+
+  #forward jenkins port
+  config.vm.network "forwarded_port", guest: 18080, host: 18080
+  #forward mongodb ports
+  config.vm.network "forwarded_port", guest: 27017, host: 27017 #db
+  config.vm.network "forwarded_port", guest: 28017, host: 28017 #webstatus
+ 
+  config.vm.synced_folder "..", "/project"
+
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  end
+
+  #provision jenkins mongodb
+  config.vm.provision "shell", inline: <<-SHELL
+	 sudo apt-get update
+	 sudo apt-get install git
+	 sudo apt-get -y install default-jdk
+	 sudo apt-get -y install nodejs	
+	 sudo apt-get -y install npm
+
+         #installeer docker
+         sudo wget -qO- https://get.docker.com/ | sh
+	 sudo docker pull jenkins
+	 sudo docker pull mongo
+	 sudo docker run --name jenkins -p 18080:8080 -d jenkins 
+	 sudo docker run --name mongo -p 27101:27101 -p 28017:28017 -d mongo
+	 
+         #clone curus project
+	 git clone https://github.com/petereijgermans11/angular-project/
+	 sudo chown -R vagrant:vagrant angular-project
+
+         #installeer vertx
+	 sudo useradd -d /var/vertx  -m vertx
+	 cd /var/vertx
+	 sudo cp /vagrant/vert.x-2.1.5.tar.gz .
+	 sudo tar -xzf vert.x-2.1.5.tar.gz
+	 sudo chown -R vertx:vertx vert.x-2.1.15
+	 #TODO: start vertx in container ...
+  SHELL
+end
