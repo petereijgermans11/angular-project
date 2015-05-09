@@ -13,6 +13,7 @@ angular speeltuin
 - http://docs.vagrantup.com/v2/getting-started/provisioning.html
 - https://github.com/coffeeaddict/angular-vertx
 - http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
+- https://bardevblog.wordpress.com/2013/08/14/understanding-angularjs-simple-example/
 
  
 Ui: https://angular-ui.github.io/
