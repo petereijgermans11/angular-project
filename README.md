@@ -10,9 +10,9 @@ angular speeltuin
 - Angular PluralSight Training: http://www.pluralsight.com/courses/angularjs-fundamentals
 - Yeoman: http://yeoman.io/
 - Making Maven Grunt: http://addyosmani.com/blog/making-maven-grunt/
-- Template project for a web app using Java, Maven, JavaScript, Jasmine, and Grunt: https://github.com/ahabra/webappTemplate
 - http://docs.vagrantup.com/v2/getting-started/provisioning.html
 - https://github.com/coffeeaddict/angular-vertx
+- http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
 
  
 Ui: https://angular-ui.github.io/
