@@ -14,6 +14,7 @@ angular speeltuin
 - https://github.com/coffeeaddict/angular-vertx
 - http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
 - https://bardevblog.wordpress.com/2013/08/14/understanding-angularjs-simple-example/
+- https://github.com/knalli/angular-vertxbus
 
  
 Ui: https://angular-ui.github.io/
