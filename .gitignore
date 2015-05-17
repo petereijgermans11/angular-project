@@ -1,0 +1,7 @@
+/nbproject/private/
+/nbproject
+bower_components
+node_modules
+.vagrant
+build
+.DS_Store
