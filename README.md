@@ -15,6 +15,7 @@ angular speeltuin
 - http://www.sitepoint.com/creating-stateful-modals-angularjs-angular-ui-router/
 - https://bardevblog.wordpress.com/2013/08/14/understanding-angularjs-simple-example/
 - https://github.com/knalli/angular-vertxbus
+- https://blog.credera.com/technology-insights/open-source-technology-insights/testing-angularjs-part-1-setting-unit-testing-karma/
 
  
 Ui: https://angular-ui.github.io/
