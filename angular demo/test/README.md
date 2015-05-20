@@ -1,5 +1,5 @@
 
-Voor het runnen van de tests dien je de volgende commando's uit te voeren:
+# Voor het runnen van de tests dien je de volgende commando's uit te voeren:
 
 npm install karma --save-dev
 
