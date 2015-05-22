@@ -1,0 +1,29 @@
+<!doctype html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Videogular</title>
+ <link rel="stylesheet" href="css/maps.css">
+ <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/lodash/dist/lodash.min.js"></script>
+<script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+<script src="js/main.js"></script>
+</head>
+<body>
+	
+<div ng-app="mapsApp" ng-controller="MapCtrl">
+    <div id="map" ngClick="window.alert("sometext")></div>
+    <div id="class" ng-repeat="marker in markers | orderBy : 'title'">
+         <a href="#" ng-click="openInfoWindow($event, marker)">{{marker.title}}</a>
+    </div>
+    
+    <input type="adres" ng-model="adres"/>
+    <button x-ng-click="addAdress()">Voeg adres toe</button>	
+</div>
+
+
+</body>
+</html>
+
+
