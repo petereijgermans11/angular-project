@@ -1,0 +1,41 @@
+{
+  "name": "voorbeeld1",
+  "version": "1.0.0",
+  "description": "Setup van een nieuw project",
+  "main": "app.js",
+  "scripts": {
+    "start": "vertx run server.js",
+    "test": "karma start test/resources/karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/petereijgermans11/angular-project/voorbe"
+  },
+  "author": "Steven Dijkxhoorn",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-angular-protractor": "0.0.2",
+    "gulp-concat": "^2.5.2",
+    "gulp-flatten": "0.0.4",
+    "gulp-html-replace": "^1.4.5",
+    "gulp-jshint": "^1.10.0",
+    "gulp-minify-css": "^1.1.1",
+    "gulp-protractor": "^1.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.3",
+    "gulp-uglify": "^1.2.0",
+    "jasmine-core": "^2.3.4",
+    "jasmine-node-karma": "^1.6.1",
+    "karma": "^0.12.31",
+    "karma-chrome-launcher": "^0.1.12",
+    "karma-jasmine": "^0.3.5",
+    "karma-requirejs": "^0.2.2",
+    "karma-webpack": "^1.5.1",
+    "node-libs-browser": "^0.5.0",
+    "protractor": "^2.0.0",
+    "requirejs": "^2.1.17",
+    "webpack": "^1.9.6"
+  }
+}

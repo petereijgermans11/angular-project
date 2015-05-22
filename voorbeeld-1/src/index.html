@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="myShop">
+    <head>
+        <title>Winkel</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- build:css -->
+         <link rel="stylesheet" href="css/app.css">
+         <!-- endbuild -->
+        <script src="../bower_components/angular/angular.min.js" ></script>        
+    </head>
+    <body>
+        <section ng-controller="productCatalog as catalog">
+            <div ng-repeat="product in producten">
+                <div>{{product.omschrijving}}</div>
+                <div>{{product.prijs}}</div>                
+        </section>
+        <!-- build:js -->
+        <script src="app.js"></script>            
+        <!-- endbuild -->
+    </body>
+</html>
