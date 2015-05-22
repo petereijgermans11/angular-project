@@ -1,0 +1,63 @@
+<!doctype html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Videogular</title>
+
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="bower_components/videogular/videogular.js"></script>
+<script src="bower_components/videogular-controls/vg-controls.js"></script>
+<script src="bower_components/videogular-overlay-play/vg-overlay-play.js"></script>
+<script src="bower_components/videogular-poster/vg-poster.js"></script>
+<script src="bower_components/videogular-buffering/vg-buffering.js"></script>
+<script src="js/main.js"></script>
+</head>
+<body>
+	
+
+<div ng-app="myApp">
+  <div ng-controller="HomeCtrl as controller" class="videogular-container">
+    <videogular vg-theme="controller.config.theme.url" vg-player-ready="controller.onPlayerReady($API)"
+                            vg-update-time="controller.onUpdateTime($currentTime, $duration)">
+        <vg-media vg-src="controller.config.sources"
+                  vg-tracks="controller.config.tracks"
+                  vg-native-controls="true">
+        </vg-media>
+        
+         <vg-controls vg-autohide="controller.config.plugins.controls.autoHide" vg-autohide-time="controller.config.plugins.controls.autoHideTime">
+            <vg-play-pause-button></vg-play-pause-button>
+            <vg-time-display>{{ currentTime | date:'mm:ss' }}</vg-time-display>
+            <vg-scrub-bar>
+                <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+            </vg-scrub-bar>
+            <vg-time-display>{{ timeLeft | date:'mm:ss' }}</vg-time-display>
+            <vg-time-display>{{ totalTime | date:'mm:ss' }}</vg-time-display>
+            <vg-volume>
+                <vg-mute-button></vg-mute-button>
+                <vg-volume-bar></vg-volume-bar>
+            </vg-volume>
+			<vg-playback-button></vg-playback-button>
+            <vg-fullscreen-button></vg-fullscreen-button>
+            <my-stop-button></my-stop-button>
+        </vg-controls>
+
+    </videogular>
+      <div class="my-show-hide-animation" ng-repeat="quiz in controller.quizes" ng-show="quiz.show">
+          <form name="{{ 'question' + $index }}" ng-submit="controller.onSendForm()" novalidate>
+              <h4>{{quiz.question}}</h4>
+              <div ng-repeat="answer in quiz.answers">
+                  <input type="radio" value="{{$index}}" ng-model="controller.answers[quiz.index]">
+                  <label>{{answer}}</label>
+              </div>
+
+              <button type="submit">send</button>
+          </form>
+      </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+
