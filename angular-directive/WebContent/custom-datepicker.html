@@ -1,0 +1,19 @@
+<script type="text/ng-template" id="custom-datepicker.html">
+    <div class="form-inline enhanced-datepicker">
+        <label>
+            <input
+                type="text"
+                id="{{id}}"
+                name="{{name}}"
+                ng-model="ngModel"
+                datepicker-popup="{{popup}}"
+                datepicker-options="{{options}}"
+                date-disabled="{{dateDisabled}}"
+                min="{{min}}"
+                max="{{max}}"
+                open="opened"
+                ng-pattern="/^(?:[1-9]|1\d|2\d|3[0-1]) (?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec) (?:1|2)(?:\d{3})$/gim"/>
+            <span class="btn"><i class="icon-calendar"></i></span>
+        </label>
+    </div>
+</script>
