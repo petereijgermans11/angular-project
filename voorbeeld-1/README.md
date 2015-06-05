@@ -1,8 +1,22 @@
 # AngularJS Project Buildtools
-Angular speeltuin
-Dit document gaat over de setup van een nieuw project.
 
-Om een Angular project op te zetten is nodejs en npm nodig.
+Een AngularJS projet wordt vaak opgezet als een 'frontend' project met NodeJs en
+npm (package-manager). Hieronder is een voorbeeld uitgewerkt hoe zo'n project 
+van scratch af aan kan worden opgezet. De tools die vaak worden gebruikt naast 
+NodeJs en npm zijn:
+Bower: package-manager
+Gulp: build-tool
+Grunt: build-tool
+Jasmine: Javascript unit test library, (mocha, sinon en qunit zijn andere 
+unit-test-frameworks.
+Karma: test-runner
+Protractor: end-2-end (Selenium) testen voor AngularJs
+
+Het doel is de css en javascript van het angular project te minimalizeren en 
+automatische testen te draaien tijdens de build. 
+Een leuke feature is dat de testen continue kunnen lopen ook tijdens 
+ontwikkeling.
+
 
 ##npm
 Begin met het initialiseren van npm
@@ -40,11 +54,10 @@ Bower kan het best 'globaal' worden geinstalleerd. (Zie: http://bower.io/)
 
 De optie '-g' installeert bower in de globale module library van npm.
 
-#TODO: uitleg npm
-Hiervoor moet het
-bestand package.json worden uitgebreid.
+Om straks testen te kunnen gaan draaien voegen we karma toe
 
-Voeg aan het json bestand de volgende regels toe, (ergens voor de laatste accolade).
+Voeg aan het json bestand de volgende regels toe,(ergens voor de laatste 
+accolade).
 ```
 "devDependencies" : {
     "karma":"^0.12"
@@ -77,10 +90,20 @@ Andere mogelijkheden zijn:
 
 ## Bower
 
+In tegenstelling tot npm is Bower een package tool die meer gericht op 
+client-side packages zoals AngularJs.
 
-Nu kunnen we met bower javascript packages installeren, bower zet deze in: bower-components.
 ```
-   bbower install angular#1.3.15
+npm install -g bower
+```
+
+
+Nu kunnen we met bower javascript packages installeren, 
+bower zet deze in: bower-components. Bower kan worden geconfigureerd in .bowerrc
+, zie: http://bower.io/docs/config/.
+
+```
+   bower install angular#1.3.15
    bower install angular-route#1.3.15
 ```
 
@@ -90,14 +113,19 @@ bower init
 ```
 
 Bower stelt een aantal vragen, let bij de volgende vragen op:
-bij 'what types of modules does this package expose', selecteer geen enkele maar ga verder.
-bij 'would you like to mark this package as private which prevents...' kies 'y'.
+bij 'what types of modules does this package expose', selecteer geen enkele maar 
+ga verder. 
+Bij 'would you like to mark this package as private which prevents...' kies 'y'.
 
 
 Nu zijn we zover om een angular hello world applicatie te maken.
 De maven directory structuur is algemeen bekend, laten we die volgen.
 
-Maak het bestand  'index.html' en en 'app.js' in src/.
+Maak een voorbeeld applicatie in de bestanden 'index.html' en en 'app.js' en 
+plaatst deze in src/.
+
+In dit voorbeeld gebruiken we Vert.x maar NodeJs kan ook worden gebruikt om een 
+http server op te zetten.
 
 Maak het bestand server.js aan met de volgende inhoud:
 ```
@@ -123,12 +151,13 @@ angular toevoegen.
 
 ##Buildtools
 
-De javascript en css voor productie moet zo klein mogelijk gemaakt worden zodat de html
-pagina's snel laden.
+De javascript en css voor productie moet zo klein mogelijk gemaakt worden zodat 
+de html pagina's snel laden.
 
 
-Hiervoor zijn allerlei utilities gemaakt die via een buildtool zoals 'gulp' of 'grunt' aangeroepen kunnen worden.
-Zowel grunt als gulp zijn prima tools.
+Hiervoor zijn allerlei utilities gemaakt die via een buildtool zoals 'gulp' of 
+'grunt' aangeroepen kunnen worden. Zowel grunt als gulp zijn prima tools maar 
+we hebben gekozen voor Gulp omdat deze een 'mooie' fluent interface heeft.
 
 ##Gulp
 Om gulp de installeren:
@@ -159,17 +188,15 @@ Run
 gulp
 ```
 
+We kunnen gulp gebruiken om zowel een minified als een nonminified versie van
+de javascript te maken. Hiervoor is de plugin gulp-uglify nodig in de d
+evelopment dependencies van dit project.
 
-
-Nu gaan we gulp gebruiken om zowel een minified als een nonminified versie van
-de javascript te maken.
-
-Hiervoor installeren we gulp-uglify in de development dependencies van dit project.
 ```
 npm install --save-dev gulp-uglify
 ```
 
-En gulp-rename om  bestanden te hernoemen.
+En de plugin gulp-rename om  bestanden te hernoemen is ook nodig.
 ```
 npm install --save-dev gulp-rename
 ```
@@ -288,7 +315,8 @@ gulp.task('minify-css', function() {
 Om de javascript en css te vervangen door 1 bestand moet de html ook worden 
 aangepast. Hiervoor kunnen we een extra taak opnemen in de gulpfile.
 
-Eerst moet de module html-replace worden geinstalleerd in de development dependencies.
+Eerst moet de module html-replace worden geinstalleerd in de development 
+dependencies.
 ```
 npm install --save-dev gulp-html-replace
 ```
@@ -323,8 +351,7 @@ gulp.task('default', ['minify-js', 'minify-css', 'html-replace-minified']);
 ```
 
 Nu hebben we weliswaar een build maar we moeten nog de vendor bestanden 
-toevoegen. Hiervoor maken we een eenvoudige task die de vendor bestanden 
-kopieert en voegen deze toe aan de default task.
+toevoegen met een eenvoudige task die de vendor bestanden kopieert. 
 
 ```
 gulp.task('default', ['minify-js', 'minify-css', 'html-replace-minified', 'copy-vendor']);
@@ -351,7 +378,7 @@ html. Hiervoor maken we een task die alle minified javascripts uit
 bower_components in build/vendor zet en een task die met html-replace 
 de scripts tags in de html aanpast.
 
-Met gulp flatten kunnen de bower componenten worden gekopieerd.
+Met gulp flatten plugin kunnen de bower componenten worden gekopieerd.
 
 ```
 npm install --save-dev gulp-flatten
@@ -415,12 +442,12 @@ gulp.task('clean', function (cb) {
   del(DEST + '*', cb);
 });
 ```
-Het argument 'cb' is de callback function die aan de taak wordt meegegeven.
+Gulp voert de taken asynchroon uit en om zeker te weten dat een taak alleen
+wordt uitgevoerd als de vorige sucesvol was moet er een callback worden 
+meegegeven aan een taak. In de clean functie hebben we dit al gedaan.
 
-
-Het aantal gulp taken wordt nu wel veel, laten we eens kijken of we dat kunnen 
-verbeteren door taken te koppelen. De ene taak kan alleen worden uitgevoerd als 
-een andere taak ook is uitgevoerd.
+De taken moeten ook worden gekoppeld aan clean zodat ze pas starten nadat clean 
+klaar is.
 
 Bij een build willen we 
 1. clean
@@ -430,12 +457,6 @@ Bij een build willen we
 4.2 vervang bower_components script tags in de html met vendor.
 5. kopieer bower_component naar vendor
 
-
-Stappen 2-5 mogen asynchroon worden uitgevoerd nadat stap 1 is uitgevoerd. 
-
-Gulp voert de taken niet synchroon uit en om zeker te weten dat een taak alleen
-wordt uitgevoerd als de vorige sucesvol was moet er een callback worden 
-meegegeven aan een taak. In de clean functie hebben we dit al gedaan.
 
 De overige taken moeten afhankelijk zijn van 'clean'.
 
@@ -479,9 +500,12 @@ gulp.task('clean', function (cb) {
 });
 ```
 
+De herhaling is niet erg mooi maar een consequentie van de wijze waarop Gulp is
+gebouwd.
+
 ##Testen
-Om de applicatie te kunnen testen zou de javascriptcode in meerdere browsers 
-getest kunnen worden. Hiervoor is 'karma' de aangewezen tool. 
+Een fromt-end javascript aplicatie moet in meerdere browsers getest worden. 
+Hiervoor is 'karma' de aangewezen tool. 
 (Zie: https://www.npmjs.com/package/karma)
 Karma wordt bijvoorkeur geinstalleerd in het project zelf. 
 
@@ -498,7 +522,8 @@ protractor.conf.
 De unittesten zetten we onder test/unit en de protractor testen onder test/e2e
  
 We maken eerst de configuratie file voor karma.
-Karma heeft hiervoor een tool 'karma init' maar eerst moet karma geinstalleerd worden.
+Karma heeft hiervoor een tool 'karma init' maar eerst moet karma geinstalleerd 
+worden.
 ```
 npm install karma --save-dev
 ```
@@ -533,7 +558,8 @@ test/unit/**/*.js
 Er hoeven geen bestanden uitgesloten te worden
 Karma moet de de test draaien bij een wijziging.
 En laat karma de bootstrap file voor requirejs maken (test-main.js)
-Verplaatst het bestand test-main.js naar test/bootsrap-karma.js en pas de lijst met files aan:
+Verplaatst het bestand test-main.js naar test/bootsrap-karma.js en pas de lijst 
+met files aan:
 
 ```
  files: [
@@ -694,14 +720,8 @@ gulp.task('lint',['clean'], function() {
 });
 ```
 
-Om lokaal te ontwikkelen is dit 'handig?' misschien wil je niet bij elke
-wijziging alle testen draaien. Maar ze handmatig starten.
-
-De volgende stap is om na een commit een build te starten op een build-server
-en een deployment te doen als de testen succesvol zijn.
-
-
-
-
+#Next
+Na een commit een build te starten op een build-serveren een deployment uit te 
+voeren als de testen succesvol zijn.
 
  
