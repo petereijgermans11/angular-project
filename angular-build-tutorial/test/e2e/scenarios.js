@@ -15,7 +15,6 @@ describe('MyShop App', function() {
     it('all products should be shown', function() {
 
       var productList = element.all(by.repeater('product in producten'));
-      var query = element(by.model('query'));
       expect(productList.count()).toBe(3);
     });
 

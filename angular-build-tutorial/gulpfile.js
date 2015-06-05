@@ -41,7 +41,6 @@ gulp.task('minify-js',['clean'], function() {
     .pipe(gulp.dest(DEST))
 });
 
-
 gulp.task('minify-css',['clean'], function() {
   return gulp.src('src/css/*.css')
     .pipe(minifyCss())
@@ -87,10 +86,4 @@ gulp.task('e2e-test',['build'], function() {
         'debug': true
     }))
     .on('error', function(e) { throw e });    
-});
-
-gulp.task('watch', function() {
-    gulp.watch('src/**/*.*', ['e2e-test']);
-    gulp.watch('test/unit/**/*Spec.js', ['e2e-test']);
-    gulp.watch('test/e2e/**/*.js', ['e2e-test']);
 });

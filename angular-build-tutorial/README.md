@@ -720,8 +720,166 @@ gulp.task('lint',['clean'], function() {
 });
 ```
 
+
 #Next
 Na een commit een build te starten op een build-serveren een deployment uit te 
 voeren als de testen succesvol zijn.
+ 
+#Docker
+
+Docker is een tool die deployments automatiseert in 'software-containers' 
+waardoor het mogelijk is om een deployment op een platform te leveren ipv 
+software die nog geployed moet worden.
+
+Om een docker container te maken is er een dockerfile nodig ('Dockerfile').
+Deze neemt als basis een container met een webserver 'nginx', kopieert de html,
+javascript en css naar de public directory en zet de rechten van de bestanden.
+Met `docker build -t <tag> .` kan een docker image worden gemaakt en gestart op 
+poort 12345 met:
+`docker run --name voorbeeld1 -p 12345:80 voorbeeld1`
 
  
+```
+FROM nginx
+MAINTAINER Polyglot polyglot@ordina.nl
+EXPOSE 80
+COPY build /usr/share/nginx/html
+RUN chown -R nginx:nginx /usr/share/nginx/html/*
+```
+
+#Continous Integration/Deployment
+
+Na een commit moet het project gebouwd worden en een docker container gemaakt
+die geployed kan worden.
+
+Diverse systemen zijn hiervoor geschikt, het kan worden opgezet met jenkins
+maar ook systemen als Deis zijn interessant. 
+Met Deis kan je een applicatie die in een docker container kan draaien 
+deployen in een coreos cluster. Het enige wat je hoeft te doen is de git 
+repository te 'pushen' naar Deis die de build fase start de build daarna 
+publiceert naar een docker container en deze op het cluster start.
+
+#Build en deploy met Jenkins
+Hieronder wordt een voorbeeld met jenkins uitgewerkt. 
+
+In dit voorbeeld wordt een git repository gemaakt met hook die een build op
+de jenkins server start zodat na elke push een build start.
+
+De Jenkins server heeft alle benodigde tools nodig voor de build:
+- nodejs
+- npm
+- karma
+- protractor
+
+
+De 'end-to-end' testen worden gestart met een headless browser (PhantomJS).
+De integratie testen worden tegen een deployment uitgevoerd.
+
+(In een meer 'dockerized' opzet kan de build ook op een container 
+worden uitgevoerd.)
+
+- run unit tests, build html/javascript/css
+- voeg unittest rapport toe aan build
+- build de container 
+- run de container met backing services 
+- run e2e tests tegen de container
+- voeg het rapport van de e2e testen toe aan de build.
+- deploy de container naar een 'omgeving'.
+
+
+
+Op jenkins moet de git plugin worden geinstalleerd.
+Manage Jenkins -> Plugins -> Available -> Git Plugin.
+
+Maak een build job op jenkins
+Kies een 'Freestyle Project'
+
+Kies bij Source code management 'Git' en vul als repo de lokale repo in.
+
+`file:///home/vagrant/repo`
+
+Kies bij 'Build Triggers' 'Poll SCM'
+
+Voeg een shell build toe met het commando.
+```
+npm build
+```
+
+
+In de git repo moet een hook worden toegevoegd die de job start na een push.
+Login op de host met jenkins (`vagrant ssh`)
+```
+echo http://localhost:8080/git/notifyCommit?url=file:///home/vagrant/repo > /home/vagrant/repo/hooks/post-receive
+chmod u+x /home/vagrant/repo/hooks/post-receive
+```
+
+De repository kan je uit checken met:
+```
+git clone ssh://vagrant@localhost:2200/home/vagrant/repo
+```
+
+Plaats iets in de directory commit en push, en de build zou moeten starten.
+Bijvoorbeeld:
+
+```
+npm install
+gulp build
+```
+
+Om een container te maken van de build maken we een dockerfile die alle 
+bestanden in de directory 'build' kopieert naar de 'webroot' van de container:
+```
+FROM nginx
+MAINTAINER Polyglot ployglot@ordina.nl
+EXPOSE 80
+COPY build /usr/share/nginx/html
+RUN chown -R nginx:nginx /usr/share/nginx/html/*
+```
+
+De user jenkins moet toegang krijgen tot de docker client, de user jenkins moet
+worden toegevoegd aan de group docker en jenkins moet worden herstart.
+```
+usermod -G docker jenkins
+/etc/init.d/jenkins restart
+```
+Jenkins kan de docker container worden bouwen.
+```
+docker build -t myproject:version_$BUILD_NUMBER .
+```
+Om het project een beetje inhoud te geven kunnen we een aantal modules en een 
+gulp build file toevoegen en een aantal bestanden.
+
+```
+npm install --save-dev gulp
+npm install --save-dev del
+mkdir src
+echo "Hallo wereld" > src/index.html
+```
+
+gulpfile.js
+```
+
+var gulp = require('gulp');
+var del = require('del');
+
+
+var DEST = 'build/';
+
+gulp.task('default', ['build']);
+
+gulp.task('build', [
+    'clean',
+    'process-html',
+]);
+
+
+gulp.task('process-html',['clean'], function() {
+  return gulp.src('src/*.html')
+    .pipe(gulp.dest(DEST));
+});
+
+gulp.task('clean', function (cb) {
+    del(DEST + '*', cb);  
+});
+
+```

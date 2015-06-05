@@ -5,3 +5,5 @@ node_modules
 .vagrant
 build
 .DS_Store
+/voorbeeld-1/npm-debug.log
+/angular rest/target/
