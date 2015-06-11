@@ -1,0 +1,8 @@
+node_modules
+test/gulp-file
+test/sass
+test/slug
+temp/
+.idea
+
+.idea
