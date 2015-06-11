@@ -1,0 +1,39 @@
+<html>
+<head>
+<script type="text/javascript" src="angular.js"></script>
+<script type="text/javascript" src="groceryListService.js"></script>
+<script type="text/javascript" src="groceryListController.js"></script>
+</head>
+<body data-ng-app="groceryListApp"
+	data-ng-controller="groceryListController">
+	<h1>My groceries</h1>
+	<form name="groceryForm">
+		<table>
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>name</th>
+					<th>quantity</th>
+					<th>remarks</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="grocery in groceries">
+					<td>{{grocery.id}}</td>
+					<td>
+					    <input name="name" type="text" data-ng-model="grocery.name" /> 
+						
+					</td>
+					<td><input type="text" data-ng-model="grocery.quantity" /></td>
+					<td><input type="text" data-ng-model="grocery.remarks" /></td>
+					<td><input type="button" value="save" data-ng-click="save($index)" />
+					<input type="button" value="delete" data-ng-click="remove($index)" /></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<input type="button" value="add row" data-ng-click="add()" />
+	</form>
+</body>
+</html>
