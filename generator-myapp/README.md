@@ -24,6 +24,7 @@ Please see the [gulpfile.js](generators/app/templates/gulpfile.js) for up to dat
 
 - Install dependencies: `npm install --global yo bower`
 - Install the generator: `npm install --global generator-myapp`
+- Run in the root folder of the generator-myapp : npm link
 - Run `yo myapp` to scaffold your webapp
 - Run `gulp serve` to preview and watch for changes
 - Run `bower install --save <package>` to install frontend dependencies
