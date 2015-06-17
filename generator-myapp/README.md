@@ -1,4 +1,7 @@
 
+Generator that scaffolds out a front-end web app for AngularJS, JQuery, Modernizr, Bootstrap, SASS and the mocha-test framework.
+
+![](screenshot.png)
 
 ## Features
 
@@ -13,7 +16,7 @@ Please see the [gulpfile.js](generators/app/templates/gulpfile.js) for up to dat
 *	Image optimization
 *	Automagically wire-up dependencies installed with [Bower](http://bower.io)
 *	Inject [Bower](http://bower.io) components to your HTML/SCSS files via the wiredep task.
-*   Support for AngularJS, JQuery, Modernizr, Bootstrap, SASS and mocha-test framework
+*   Support for AngularJS, JQuery, Modernizr, Bootstrap, SASS and the mocha-test framework
 *	Use the .tmp directory mostly for compiling assets like SCSS files. It has precedence over app, so if you had an app/index.html template compiling to .tmp/index.html, your application would point to .tmp/index.html, which is what we want.
 
 
